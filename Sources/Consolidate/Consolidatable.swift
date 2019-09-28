@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Consolidatable {
+public protocol Consolidatable {
     
     var consolidationGroup: AnyHashable { get }
     
@@ -16,7 +16,7 @@ protocol Consolidatable {
     
 }
 
-extension Array where Element: Consolidatable {
+public extension Array where Element: Consolidatable {
     
     func consolidated() -> Self {
         
