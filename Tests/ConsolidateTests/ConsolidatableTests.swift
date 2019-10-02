@@ -11,6 +11,8 @@ import XCTest
 
 final class ConsolidatableTests: XCTestCase {
     
+    // MARK: Consolidatable Protocol Implementation
+    
     func test_emptyArray_returnsEmptyArray() {
     
         let consolidatedTaxes: [TaxAmount] = [].consolidated()
@@ -18,18 +20,13 @@ final class ConsolidatableTests: XCTestCase {
         XCTAssertEqual(consolidatedTaxes, [])
     }
     
-    func test_noConsolidabaleValues_doesNotConsolidate() {
+    func test_usingConsolidatableProtocol_noConsolidabaleValues_doesNotConsolidate() {
     
-        let importTax = TaxAmount(tax: "Import Tax", amount: 3.00)
-        let salesTax = TaxAmount(tax: "Sales Tax", amount: 1.75)
-        let exportTax = TaxAmount(tax: "Export Tax", amount: 2.30)
-        let incomeTax = TaxAmount(tax: "Income Tax", amount: 2.35)
-        
         let consolidatedTaxes = [
-            importTax,
-            salesTax,
-            exportTax,
-            incomeTax
+            TaxAmount(tax: "Import Tax", amount: 3.00),
+            TaxAmount(tax: "Sales Tax", amount: 1.75),
+            TaxAmount(tax: "Export Tax", amount: 2.30),
+            TaxAmount(tax: "Income Tax", amount: 2.35)
         ].consolidated()
         
         XCTAssertEqual(consolidatedTaxes, [
@@ -40,44 +37,75 @@ final class ConsolidatableTests: XCTestCase {
         ])
     }
     
-    func test_multipleConsolidabaleValues_consolidates() {
-    
-        let importTaxA = TaxAmount(tax: "Import Tax", amount: 3.00)
-        let salesTaxA = TaxAmount(tax: "Sales Tax", amount: 1.75)
-        let importTaxB = TaxAmount(tax: "Import Tax", amount: 2.30)
-        let salesTaxB = TaxAmount(tax: "Sales Tax", amount: 2.35)
-        
+    func test_usingConsolidatableProtocol_consolidabaleValues_consolidates() {
+
         let consolidatedTaxes = [
-            importTaxA,
-            salesTaxA,
-            importTaxB,
-            salesTaxB
+            TaxAmount(tax: "Import Tax", amount: 3.00),
+            TaxAmount(tax: "Sales Tax", amount: 1.75),
+            TaxAmount(tax: "Import Tax", amount: 2.30)
         ].consolidated()
         
         XCTAssertEqual(consolidatedTaxes, [
             TaxAmount(tax: "Import Tax", amount: 5.30),
-            TaxAmount(tax: "Sales Tax", amount: 4.10)
+            TaxAmount(tax: "Sales Tax", amount: 1.75)
+        ])
+    }
+    
+    // MARK: By KeyPath
+    
+    func test_byKeyPath_consolidates() {
+    
+        let taxes = [
+            TaxAmount(tax: "Import Tax", amount: 3.00),
+            TaxAmount(tax: "Sales Tax", amount: 1.75),
+            TaxAmount(tax: "Import Tax", amount: 2.30)
+        ].consolidated(by: \.tax) {
+            TaxAmount(tax: $0.tax, amount: $0.amount + $1.amount)
+        }
+        
+        XCTAssertEqual(taxes, [
+            TaxAmount(tax: "Import Tax", amount: 5.30),
+            TaxAmount(tax: "Sales Tax", amount: 1.75)
+        ])
+    }
+    
+    func test_byClosure_consolidates() {
+    
+        let taxes = [
+            TaxAmount(tax: "Import Tax", amount: 3.00),
+            TaxAmount(tax: "Sales Tax", amount: 1.75),
+            TaxAmount(tax: "Import Tax", amount: 2.30)
+        ].consolidated(by: { $0.tax == $1.tax }) {
+            TaxAmount(tax: $0.tax, amount: $0.amount + $1.amount)
+        }
+        
+        XCTAssertEqual(taxes, [
+            TaxAmount(tax: "Import Tax", amount: 5.30),
+            TaxAmount(tax: "Sales Tax", amount: 1.75)
         ])
     }
 
     static var allTests = [
-        ("test_noConsolidabaleValues_doesNotConsolidate", test_noConsolidabaleValues_doesNotConsolidate),
-        ("test_multipleConsolidabaleValues_consolidates", test_multipleConsolidabaleValues_consolidates),
+        ("test_emptyArray_returnsEmptyArray", test_emptyArray_returnsEmptyArray),
+        ("test_usingConsolidatableProtocol_noConsolidabaleValues_doesNotConsolidate", test_usingConsolidatableProtocol_noConsolidabaleValues_doesNotConsolidate),
+        ("test_usingConsolidatableProtocol_consolidabaleValues_consolidates", test_usingConsolidatableProtocol_consolidabaleValues_consolidates),
+        ("test_byKeyPath_consolidates", test_byKeyPath_consolidates),
+        ("test_byClosure_consolidates", test_byClosure_consolidates)
     ]
-}
+    
+    // MARK: Test Fixtures
 
-// MARK: Test Fixtures
-
-struct TaxAmount: Equatable, Consolidatable {
-    
-    let tax: String
-    let amount: Decimal
-    
-    var consolidationGroup: AnyHashable {
-        return tax
-    }
-    
-    func consolidate(with other: Self) -> Self {
-        return .init(tax: tax, amount: amount + other.amount)
+    private struct TaxAmount: Equatable, Consolidatable {
+        
+        let tax: String
+        let amount: Decimal
+        
+        var consolidationGroup: AnyHashable {
+            return tax
+        }
+        
+        func consolidate(with other: Self) -> Self {
+            return .init(tax: tax, amount: amount + other.amount)
+        }
     }
 }

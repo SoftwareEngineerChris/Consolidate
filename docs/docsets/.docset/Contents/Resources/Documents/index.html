@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html"> Docs</a> (100% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html"> Reference</a>
+        <img id="carat" src="img/carat.png" />
+          Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/Array.html">Array</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/Consolidatable.html">Consolidatable</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='consolidate' class='heading'>Consolidate</h1>
+
+<p><a href="https://app.bitrise.io/app/2401d8d24819bc28"><img src="https://app.bitrise.io/app/2401d8d24819bc28/status.svg?token=rpSxCpEdigqkV5zTb-dRog" alt="Build Status"></a>
+<a href="https://softwareengineerchris.github.io/MonetaryAmount"><img src="https://softwareengineerchris.github.io/Consolidate/badge.svg" alt="Docs"></a>
+<a href="#"><img src="https://img.shields.io/badge/SPM-Supported-informational" alt="SPM"></a></p>
+<h2 id='installation' class='heading'>Installation</h2>
+<h3 id='swift-package-manager' class='heading'>Swift Package Manager</h3>
+<pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+   <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/SoftwareEngineerChris/Consolidate.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"1.0.1"</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre>
+<h3 id='usage-example' class='heading'>Usage Example</h3>
+<h4 id='using-keypath' class='heading'>Using KeyPath</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allTaxes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">3.00</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">1.75</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">2.30</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="k">let</span> <span class="nv">consolidatedTaxes</span> <span class="o">=</span> <span class="n">allTaxes</span><span class="o">.</span><span class="nf">consolidated</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="err">\</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">tax</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">amount</span> <span class="o">+</span> <span class="nv">$1</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// Would result in:</span>
+
+<span class="k">let</span> <span class="nv">consolidatedTaxes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">5.30</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">4.10</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre>
+<h4 id='using-closures' class='heading'>Using Closures</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allTaxes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">3.00</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">1.75</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">2.30</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="k">let</span> <span class="nv">consolidatedTaxes</span> <span class="o">=</span> <span class="n">allTaxes</span><span class="o">.</span><span class="nf">consolidated</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="nv">$1</span><span class="o">.</span><span class="n">name</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">tax</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">amount</span> <span class="o">+</span> <span class="nv">$1</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// Would result in:</span>
+
+ <span class="k">let</span> <span class="nv">consolidatedTaxes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">5.30</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">4.10</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre>
+<h4 id='using-consolidatable-protocol' class='heading'>Using Consolidatable Protocol</h4>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">TaxAmount</span><span class="p">:</span> <span class="kt">Consolidatable</span> <span class="p">{</span>
+
+    <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">amount</span><span class="p">:</span> <span class="kt">Decimal</span>
+
+    <span class="k">var</span> <span class="nv">consolidationGroup</span><span class="p">:</span> <span class="kt">AnyHashable</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">name</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">consolidate</span><span class="p">(</span><span class="n">with</span> <span class="nv">other</span><span class="p">:</span> <span class="k">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="n">amount</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>The above implementation would consolidate like this:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">taxes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">3.00</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">1.75</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">2.30</span><span class="p">)</span>
+<span class="p">]</span><span class="o">.</span><span class="nf">consolidated</span><span class="p">()</span>
+
+<span class="c1">// Results in:</span>
+
+<span class="k">let</span> <span class="nv">taxes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">5.30</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">4.10</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-10-02)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
