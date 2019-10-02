@@ -1,7 +1,7 @@
 # Consolidate
 
 [![Build Status](https://app.bitrise.io/app/2401d8d24819bc28/status.svg?token=rpSxCpEdigqkV5zTb-dRog)](https://app.bitrise.io/app/2401d8d24819bc28)
-[![Docs](https://softwareengineerchris.github.io/Consolidate/badge.svg)](https://softwareengineerchris.github.io/MonetaryAmount)
+[![Docs](https://softwareengineerchris.github.io/Consolidate/badge.svg)](https://softwareengineerchris.github.io/Consolidate)
 [![SPM](https://img.shields.io/badge/SPM-Supported-informational)](#)
 
 ## Installation
