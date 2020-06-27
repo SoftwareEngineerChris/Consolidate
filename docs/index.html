@@ -33,6 +33,9 @@
               <li class="nav-group-task">
                 <a href="Extensions/Array.html">Array</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Array/ConsolidationError.html">– ConsolidationError</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -60,15 +63,15 @@
    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/SoftwareEngineerChris/Consolidate.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"1.0.0"</span><span class="p">)</span>
 <span class="p">]</span>
 </code></pre>
-<h3 id='usage-example' class='heading'>Usage Example</h3>
-<h4 id='using-keypath' class='heading'>Using KeyPath</h4>
+<h2 id='usage-example' class='heading'>Usage Example</h2>
+<h3 id='using-keypath' class='heading'>Using KeyPath</h3>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allTaxes</span> <span class="o">=</span> <span class="p">[</span>
     <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">3.00</span><span class="p">),</span>
     <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">1.75</span><span class="p">),</span>
     <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">2.30</span><span class="p">)</span>
 <span class="p">]</span>
 
-<span class="k">let</span> <span class="nv">consolidatedTaxes</span> <span class="o">=</span> <span class="n">allTaxes</span><span class="o">.</span><span class="nf">consolidated</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="err">\</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">let</span> <span class="nv">consolidatedTaxes</span> <span class="o">=</span> <span class="n">allTaxes</span><span class="o">.</span><span class="nf">consolidated</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">tax</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">amount</span> <span class="o">+</span> <span class="nv">$1</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
 <span class="p">}</span>
 
@@ -79,7 +82,7 @@
     <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">4.10</span><span class="p">)</span>
 <span class="p">]</span>
 </code></pre>
-<h4 id='using-closures' class='heading'>Using Closures</h4>
+<h3 id='using-closures' class='heading'>Using Closures</h3>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allTaxes</span> <span class="o">=</span> <span class="p">[</span>
     <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">3.00</span><span class="p">),</span>
     <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">1.75</span><span class="p">),</span>
@@ -97,7 +100,7 @@
     <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">4.10</span><span class="p">)</span>
 <span class="p">]</span>
 </code></pre>
-<h4 id='using-consolidatable-protocol' class='heading'>Using Consolidatable Protocol</h4>
+<h3 id='using-consolidatable-protocol' class='heading'>Using Consolidatable Protocol</h3>
 <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">TaxAmount</span><span class="p">:</span> <span class="kt">Consolidatable</span> <span class="p">{</span>
 
     <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span>
@@ -127,12 +130,50 @@
     <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">4.10</span><span class="p">)</span>
 <span class="p">]</span>
 </code></pre>
+<h3 id='consolidate-into-single-item-throws-if-unable-to' class='heading'>Consolidate into single item (throws if unable to)</h3>
+
+<p>There may be times where you want to consolidate a collection of elements into a single element.
+For this, there exists the array extension <code>consolidatedIntoSingle</code>. It is functionally similar to the other
+consolidation methods, except its return type is of type <code>Element</code> rather than <code>[Element]</code>. This means that
+the collection has to be consolidatable to a single element. If the collection can&rsquo;t be consolidated to a single
+element, then the method will throw the error <code>ConsolidationError.couldNotBeConolidatedIntoSingleElement</code>.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allTaxes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">3.00</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">1.75</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">2.30</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1">// The line below would throw `ConsolidationError.couldNotBeConolidatedIntoSingleElement`,</span>
+<span class="c1">// since the taxes can't be consolidated into a single tax when using the name key-path.</span>
+
+<span class="k">let</span> <span class="nv">consolidatedTax</span> <span class="o">=</span> <span class="k">try</span> <span class="n">allTaxes</span><span class="o">.</span><span class="nf">consolidatedIntoSingle</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">tax</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">amount</span> <span class="o">+</span> <span class="nv">$1</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Whereas:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allTaxes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">3.00</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">2.30</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="k">let</span> <span class="nv">consolidatedTax</span> <span class="o">=</span> <span class="k">try</span> <span class="n">allTaxes</span><span class="o">.</span><span class="nf">consolidatedIntoSingle</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">tax</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">amount</span> <span class="o">+</span> <span class="nv">$1</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// Since all taxes have the name "Import Tax", they can be consolidated into a single tax</span>
+<span class="c1">// when using the name key-path. The result would be:</span>
+
+<span class="k">let</span> <span class="nv">consolidatedTax</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">5.30</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-10-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-06-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

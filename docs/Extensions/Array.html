@@ -34,6 +34,9 @@
               <li class="nav-group-task">
                 <a href="../Extensions/Array.html">Array</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Array/ConsolidationError.html">– ConsolidationError</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -52,8 +55,8 @@
             <h1>Array</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">@frozen</span>
-<span class="kd">public</span> <span class="kd">extension</span> <span class="kt">Array</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">extension</span> <span class="kt">Array</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">extension</span> <span class="kt">Array</span> <span class="k">where</span> <span class="kt">Element</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Consolidatable.html">Consolidatable</a></span></code></pre>
 
                 </div>
               </div>
@@ -64,9 +67,11 @@
               <div class="task-name-container">
                 <a name="/Closure%20Type%20Aliases"></a>
                 <a name="//apple_ref/swift/Section/Closure Type Aliases" class="dashAnchor"></a>
-                <a href="#/Closure%20Type%20Aliases">
-                  <h3 class="section-name">Closure Type Aliases</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Closure%20Type%20Aliases"></a>
+                  <h3 class="section-name"><p>Closure Type Aliases</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -129,9 +134,11 @@
               <div class="task-name-container">
                 <a name="/Consolidation"></a>
                 <a name="//apple_ref/swift/Section/Consolidation" class="dashAnchor"></a>
-                <a href="#/Consolidation">
-                  <h3 class="section-name">Consolidation</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Consolidation"></a>
+                  <h3 class="section-name"><p>Consolidation</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -139,7 +146,7 @@
                     <code>
                     <a name="/s:Sa11ConsolidateE12consolidated2by5usingSayxGs7KeyPathCyxqd__G_xx_xtXEtSHRd__lF"></a>
                     <a name="//apple_ref/swift/Method/consolidated(by:using:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sa11ConsolidateE12consolidated2by5usingSayxGs7KeyPathCyxqd__G_xx_xtXEtSHRd__lF">consolidated(by:using:)</a>
+                    <a class="token" href="#/s:Sa11ConsolidateE12consolidated2by5usingSayxGs7KeyPathCyxqd__G_xx_xtXEtSHRd__lF">consolidated(by:<wbr>using:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -155,7 +162,7 @@
     <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">2.30</span><span class="p">)</span>
 <span class="p">]</span>
 
-<span class="k">let</span> <span class="nv">consolidatedTaxes</span> <span class="o">=</span> <span class="n">allTaxes</span><span class="o">.</span><span class="nf">consolidated</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="err">\</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">let</span> <span class="nv">consolidatedTaxes</span> <span class="o">=</span> <span class="n">allTaxes</span><span class="o">.</span><span class="nf">consolidated</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">tax</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">amount</span> <span class="o">+</span> <span class="nv">$1</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
 <span class="p">}</span>
 
@@ -167,7 +174,7 @@
 <span class="p">]</span>
 </code></pre>
 
-<p>Since the <code>TaxAmount</code> type is consolidated by name, the two entries for <em><q>Sales Tax</q></em> have been consolidated
+<p>Since the <code>TaxAmount</code> type is consolidated by name, the two entries for <em>&ldquo;Sales Tax&rdquo;</em> have been consolidated
 into a single <code>TaxAmount</code> where their <code>amount</code> values have been added.</p>
 
                       </div>
@@ -221,9 +228,107 @@ into a single <code>TaxAmount</code> where their <code>amount</code> values have
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:Sa11ConsolidateE22consolidatedIntoSingle2by5usingxs7KeyPathCyxqd__G_xx_xtXEtKSHRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/consolidatedIntoSingle(by:using:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:Sa11ConsolidateE22consolidatedIntoSingle2by5usingxs7KeyPathCyxqd__G_xx_xtXEtKSHRd__lF">consolidatedIntoSingle(by:<wbr>using:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Consolidates (reduces) an array of <code>Elements</code>, by a <code>KeyPath</code> using a given closure, into a single element.</p>
+<h3 id='example' class='heading'>Example</h3>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allTaxes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">3.00</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">2.30</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1">// The next line would result in TaxAmount(name: "Import Tax", amount: 5.30)</span>
+
+<span class="k">let</span> <span class="nv">consolidatedTaxes</span> <span class="o">=</span> <span class="n">allTaxes</span><span class="o">.</span><span class="nf">consolidated</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">tax</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">amount</span> <span class="o">+</span> <span class="nv">$1</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Since the <code>TaxAmount</code> type is consolidated by name, the two entries for <em>&ldquo;Import Tax&rdquo;</em> have been consolidated
+into a single <code>TaxAmount</code> where their <code>amount</code> values have been added.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allTaxes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">3.00</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Sales Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">1.75</span><span class="p">),</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Import Tax"</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="mf">2.30</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1">// The next line would throw</span>
+
+<span class="k">let</span> <span class="nv">consolidatedTaxes</span> <span class="o">=</span> <span class="n">allTaxes</span><span class="o">.</span><span class="nf">consolidated</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">TaxAmount</span><span class="p">(</span><span class="nv">tax</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="nv">$0</span><span class="o">.</span><span class="n">amount</span> <span class="o">+</span> <span class="nv">$1</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Since the <code>TaxAmount</code> entries would consolidate to two elements (Import Tax and Sales Tax) the example above would throw
+the error <code><a href="../Extensions/Array/ConsolidationError.html#/s:Sa11ConsolidateE18ConsolidationErrorO38couldNotBeConolidatedIntoSingleElementyACyx_GAEmlF">ConsolidationError.couldNotBeConolidatedIntoSingleElement</a></code>.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p><code><a href="../Extensions/Array/ConsolidationError.html#/s:Sa11ConsolidateE18ConsolidationErrorO38couldNotBeConolidatedIntoSingleElementyACyx_GAEmlF">ConsolidationError.couldNotBeConolidatedIntoSingleElement</a></code> error if the array does not consolidate into a single element.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@inlinable</span>
+<span class="kd">func</span> <span class="n">consolidatedIntoSingle</span><span class="o">&lt;</span><span class="kt">GroupType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">by</span> <span class="nv">keyPath</span><span class="p">:</span> <span class="kt">KeyPath</span><span class="o">&lt;</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">GroupType</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">using</span> <span class="nv">consolidating</span><span class="p">:</span> <span class="kt"><a href="../Extensions/Array.html#/s:Sa11ConsolidateEAAa">Consolidate</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Element</span> <span class="k">where</span> <span class="kt">GroupType</span> <span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>keyPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The key path to the property to use as a consolidation group.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>consolidating</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The closure used to consolidate two <code>Element</code> values into a single <code>Element</code> value.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A single element representing the consolidation by a <code>KeyPath</code> using the given <code>consolidating</code> closure.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:Sa11ConsolidateE12consolidated2by5usingSayxGSbx_xtXE_xx_xtXEtF"></a>
                     <a name="//apple_ref/swift/Method/consolidated(by:using:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sa11ConsolidateE12consolidated2by5usingSayxGSbx_xtXE_xx_xtXEtF">consolidated(by:using:)</a>
+                    <a class="token" href="#/s:Sa11ConsolidateE12consolidated2by5usingSayxGSbx_xtXE_xx_xtXEtF">consolidated(by:<wbr>using:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -252,7 +357,7 @@ combined using another closure.</p>
 <span class="p">]</span>
 </code></pre>
 
-<p>Since the <code>TaxAmount</code> type is consolidated by name, the two entries for <em><q>Sales Tax</q></em> have been consolidated
+<p>Since the <code>TaxAmount</code> type is consolidated by name, the two entries for <em>&ldquo;Sales Tax&rdquo;</em> have been consolidated
 into a single <code>TaxAmount</code> where their <code>amount</code> values have been added.</p>
 
                       </div>
@@ -307,11 +412,54 @@ into a single <code>TaxAmount</code> where their <code>amount</code> values have
             </div>
             <div class="task-group">
               <div class="task-name-container">
+                <a name="/Errors"></a>
+                <a name="//apple_ref/swift/Section/Errors" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Errors"></a>
+                  <h3 class="section-name"><p>Errors</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:Sa11ConsolidateE18ConsolidationErrorO"></a>
+                    <a name="//apple_ref/swift/Enum/ConsolidationError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:Sa11ConsolidateE18ConsolidationErrorO">ConsolidationError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Errors that can occur during consolidation</p>
+
+                        <a href="../Extensions/Array/ConsolidationError.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">enum</span> <span class="kt">ConsolidationError</span> <span class="p">:</span> <span class="kt">Error</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
                 <a name="/Where%20Element%20type%20implements%20Consolidatable"></a>
                 <a name="//apple_ref/swift/Section/Where Element type implements Consolidatable" class="dashAnchor"></a>
-                <a href="#/Where%20Element%20type%20implements%20Consolidatable">
-                  <h3 class="section-name">Where Element type implements Consolidatable</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Where%20Element%20type%20implements%20Consolidatable"></a>
+                  <h3 class="section-name"><p>Where Element type implements Consolidatable</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -359,7 +507,7 @@ into a single <code>TaxAmount</code> where their <code>amount</code> values have
 <span class="p">]</span>
 </code></pre>
 
-<p>Since the <code>TaxAmount</code> type is consolidated by name, the two entries for <em><q>Sales Tax</q></em> have been consolidated
+<p>Since the <code>TaxAmount</code> type is consolidated by name, the two entries for <em>&ldquo;Sales Tax&rdquo;</em> have been consolidated
 into a single <code>TaxAmount</code> where their <code>amount</code> values have been added.</p>
 
                       </div>
@@ -385,8 +533,8 @@ the implementation of  <code>consolidate(with:)</code></p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-10-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-06-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

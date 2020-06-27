@@ -13,9 +13,9 @@ dependencies: [
 ]
 ```
 
-### Usage Example
+## Usage Example
 
-#### Using KeyPath
+### Using KeyPath
 
 ```swift
 let allTaxes = [
@@ -36,7 +36,7 @@ let consolidatedTaxes = [
 ]
 ```
 
-#### Using Closures
+### Using Closures
 
 ```swift
 let allTaxes = [
@@ -57,7 +57,7 @@ let consolidatedTaxes = allTaxes.consolidated(by: { $0.name == $1.name }) {
 ]
 ```
 
-#### Using Consolidatable Protocol
+### Using Consolidatable Protocol
 
 ```swift
 struct TaxAmount: Consolidatable {
@@ -90,5 +90,48 @@ let taxes = [
 let taxes = [
     TaxAmount(name: "Import Tax", amount: 5.30),
     TaxAmount(name: "Sales Tax", amount: 4.10)
+]
+```
+
+### Consolidate into single item (throws if unable to)
+
+There may be times where you want to consolidate a collection of elements into a single element.
+For this, there exists the array extension `consolidatedIntoSingle`. It is functionally similar to the other
+consolidation methods, except its return type is of type `Element` rather than `[Element]`. This means that
+the collection has to be consolidatable to a single element. If the collection can't be consolidated to a single
+element, then the method will throw the error `ConsolidationError.couldNotBeConolidatedIntoSingleElement`.
+
+```swift
+let allTaxes = [
+    TaxAmount(name: "Import Tax", amount: 3.00),
+    TaxAmount(name: "Sales Tax", amount: 1.75),
+    TaxAmount(name: "Import Tax", amount: 2.30)
+]
+
+// The line below would throw `ConsolidationError.couldNotBeConolidatedIntoSingleElement`,
+// since the taxes can't be consolidated into a single tax when using the name key-path.
+
+let consolidatedTax = try allTaxes.consolidatedIntoSingle(by: \.name) {
+    TaxAmount(tax: $0.name, amount: $0.amount + $1.amount)
+}
+```
+
+Whereas:
+
+```swift
+let allTaxes = [
+    TaxAmount(name: "Import Tax", amount: 3.00),
+    TaxAmount(name: "Import Tax", amount: 2.30)
+]
+
+let consolidatedTax = try allTaxes.consolidatedIntoSingle(by: \.name) {
+    TaxAmount(tax: $0.name, amount: $0.amount + $1.amount)
+}
+
+// Since all taxes have the name "Import Tax", they can be consolidated into a single tax
+// when using the name key-path. The result would be:
+
+let consolidatedTax = [
+    TaxAmount(name: "Import Tax", amount: 5.30)
 ]
 ```

@@ -84,13 +84,40 @@ final class ConsolidatableTests: XCTestCase {
             TaxAmount(tax: "Sales Tax", amount: 1.75)
         ])
     }
+    
+    // MARK: consolidatedIntoSingle
+    
+    func test_consolidatedIntoSingle_canBeConsolidatedIntoSingle_returnsConsolidation() throws {
+        
+        let taxes = try [
+            TaxAmount(tax: "Import Tax", amount: 3.00),
+            TaxAmount(tax: "Import Tax", amount: 2.30)
+        ].consolidatedIntoSingle(by: \.tax) {
+            TaxAmount(tax: $0.tax, amount: $0.amount + $1.amount)
+        }
+        
+        XCTAssertEqual(taxes, TaxAmount(tax: "Import Tax", amount: 5.30))
+    }
 
+    func test_consolidatedIntoSingle_canNotBeConsolidatedIntoSingle_throws() throws {
+        
+        XCTAssertThrowsError(try [
+            TaxAmount(tax: "Import Tax", amount: 3.00),
+            TaxAmount(tax: "Sales Tax", amount: 1.75),
+            TaxAmount(tax: "Import Tax", amount: 2.30)
+        ].consolidatedIntoSingle(by: \.tax) {
+            TaxAmount(tax: $0.tax, amount: $0.amount + $1.amount)
+        })
+    }
+    
     static var allTests = [
         ("test_emptyArray_returnsEmptyArray", test_emptyArray_returnsEmptyArray),
         ("test_usingConsolidatableProtocol_noConsolidabaleValues_doesNotConsolidate", test_usingConsolidatableProtocol_noConsolidabaleValues_doesNotConsolidate),
         ("test_usingConsolidatableProtocol_consolidabaleValues_consolidates", test_usingConsolidatableProtocol_consolidabaleValues_consolidates),
         ("test_byKeyPath_consolidates", test_byKeyPath_consolidates),
-        ("test_byClosure_consolidates", test_byClosure_consolidates)
+        ("test_byClosure_consolidates", test_byClosure_consolidates),
+        ("test_consolidatedIntoSingle_canBeConsolidatedIntoSingle_returnsConsolidation", test_consolidatedIntoSingle_canBeConsolidatedIntoSingle_returnsConsolidation),
+        ("test_consolidatedIntoSingle_canNotBeConsolidatedIntoSingle_throws", test_consolidatedIntoSingle_canNotBeConsolidatedIntoSingle_throws),
     ]
     
     // MARK: Test Fixtures
