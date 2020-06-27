@@ -54,6 +54,59 @@ public extension Array {
         
         return consolidated(by: { $0[keyPath: keyPath] == $1[keyPath: keyPath] }, using: consolidating)
     }
+    
+    
+    /// Consolidates (reduces) an array of `Elements`, by a `KeyPath` using a given closure, into a single element.
+    ///
+    /// ### Example
+    ///
+    ///     let allTaxes = [
+    ///         TaxAmount(name: "Import Tax", amount: 3.00),
+    ///         TaxAmount(name: "Import Tax", amount: 2.30)
+    ///     ]
+    ///
+    ///     // The next line would result in TaxAmount(name: "Import Tax", amount: 5.30)
+    ///
+    ///     let consolidatedTaxes = allTaxes.consolidated(by: \.name) {
+    ///         TaxAmount(tax: $0.name, amount: $0.amount + $1.amount)
+    ///     }
+    ///
+    /// Since the `TaxAmount` type is consolidated by name, the two entries for _"Import Tax"_ have been consolidated
+    /// into a single `TaxAmount` where their `amount` values have been added.
+    ///
+    ///
+    ///     let allTaxes = [
+    ///         TaxAmount(name: "Import Tax", amount: 3.00),
+    ///         TaxAmount(name: "Sales Tax", amount: 1.75),
+    ///         TaxAmount(name: "Import Tax", amount: 2.30)
+    ///     ]
+    ///
+    ///     // The next line would throw
+    ///
+    ///     let consolidatedTaxes = allTaxes.consolidated(by: \.name) {
+    ///         TaxAmount(tax: $0.name, amount: $0.amount + $1.amount)
+    ///     }
+    ///
+    /// Since the `TaxAmount` entries would consolidate to two elements (Import Tax and Sales Tax) the example above would throw
+    /// the error `ConsolidationError.couldNotBeConolidatedIntoSingleElement`.
+    ///
+    /// - Parameters:
+    ///   - keyPath: The key path to the property to use as a consolidation group.
+    ///   - consolidating: The closure used to consolidate two `Element` values into a single `Element` value.
+    ///
+    /// - Returns: A single element representing the consolidation by a `KeyPath` using the given `consolidating` closure.
+    /// - Throws: `ConsolidationError.couldNotBeConolidatedIntoSingleElement` error if the array does not consolidate into a single element.
+    @inlinable
+    func consolidatedIntoSingle<GroupType: Hashable>(by keyPath: KeyPath<Element, GroupType>, using consolidating: Consolidate) throws -> Element {
+        
+        let consolidatedArray = consolidated(by: keyPath, using: consolidating)
+        
+        guard consolidatedArray.count == 1, let consolidatedSingle = consolidatedArray.first else {
+            throw ConsolidationError.couldNotBeConolidatedIntoSingleElement
+        }
+        
+        return consolidatedSingle
+    }
 
     /// Consolidates (reduces) an array of `Elements` grouped by the result of a closure
     /// combined using another closure.
@@ -101,6 +154,14 @@ public extension Array {
             
             return result + [element]
         }
+    }
+    
+    // MARK: Errors
+    
+    /// Errors that can occur during consolidation
+    enum ConsolidationError: Error {
+        /// Thrown when attempting to concolidate to a single element, but the collection can not be consolidated to a single element.
+        case couldNotBeConolidatedIntoSingleElement
     }
 }
 
